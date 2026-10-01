@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>noahsoundgroup</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23e11d2e'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%230a0a0a' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%230a0a0a'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="noahsoundgroup">
+<meta property="og:description" content="TikTok and Instagram promo and content creation for underground rap artists.">
+<meta property="og:url" content="https://noahsoundgroup.com/">
+<meta property="og:image" content="https://noahsoundgroup.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="TikTok and Instagram promo and content creation for underground rap artists.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +61,9 @@ textarea{min-height:110px;resize:vertical}
 #done{display:none;border:1px solid var(--red);border-radius:6px;padding:24px}
 #done h3{font-size:1.5rem;margin-bottom:10px}
 #done pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:14px;font:inherit;font-size:.95rem;color:var(--muted);margin:14px 0 18px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.btn.ghost{background:transparent;border:2px solid var(--red);padding:12px 26px}
+.btn.ghost:hover{background:var(--red)}
 footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.95rem}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
@@ -157,9 +168,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
       </form>
       <div id="done" role="status" aria-live="polite">
         <h3>One last step</h3>
-        <p>Send this message to us on Instagram so it reaches us. Tap the button and paste it into the DM.</p>
+        <p>Copy your message, then open our Instagram DM and paste it in.</p>
         <pre id="out"></pre>
-        <a class="btn" id="dm" href="https://ig.me/m/noahsoundgroup" target="_blank" rel="noopener">Open Instagram DM</a>
+        <div class="row">
+          <button class="btn ghost" id="copy" type="button">Copy message</button>
+          <a class="btn" id="dm" href="https://ig.me/m/noahsoundgroup" target="_blank" rel="noopener">Open Instagram DM</a>
+        </div>
       </div>
     </div>
   </div>
@@ -226,6 +240,18 @@ document.getElementById('f').addEventListener('submit',function(e){
   }
   tick();
 })();
+</script>
+<script>
+document.getElementById('copy').addEventListener('click',function(){
+  var b=this,out=document.getElementById('out'),txt=out.textContent;
+  function ok(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy message';},2000);}
+  function fallback(){
+    var r=document.createRange();r.selectNodeContents(out);
+    var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    try{if(document.execCommand('copy')){ok();}else{b.textContent='Select the text to copy';}}catch(e){b.textContent='Select the text to copy';}
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback);}else{fallback();}
+});
 </script>
 </body>
 </html>
